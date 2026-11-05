@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d5c46">
+  <title>สมุดเงินของฉัน</title>
+  <style>
+    :root {
+      --primary: #0d5c46;
+      --primary-light: #e6f4f0;
+      --accent: #20a37c;
+      --bg: #f4f8f6;
+      --card-bg: #ffffff;
+      --text: #11261f;
+      --text-sub: #556b63;
+      --border: #d0e1db;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+    }
+    main {
+      max-width: 480px;
+      margin: auto;
+      padding: 28px 16px 48px;
+    }
+    .header-box {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    h1 { 
+      margin: 0 0 4px; 
+      font-size: 26px; 
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .subtitle { 
+      margin: 0; 
+      color: var(--text-sub); 
+      font-size: 14px;
+    }
+    .card {
+      padding: 22px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(13, 92, 70, 0.06);
+      border: 1px solid rgba(208, 225, 219, 0.5);
+    }
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+    input, select {
+      width: 100%;
+      height: 50px;
+      padding: 0 14px;
+      font: inherit;
+      font-size: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fafcfb;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    #amount {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: right;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    input:focus, select:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(32, 163, 124, 0.12);
+    }
+    button {
+      width: 100%;
+      height: 52px;
+      margin-top: 24px;
+      border: none;
+      border-radius: 14px;
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(13, 92, 70, 0.2);
+      transition: background 0.2s, transform 0.1s;
+    }
+    button:active {
+      transform: scale(0.98);
+      background: var(--accent);
+    }
+    .success-msg {
+      margin-top: 14px;
+      padding: 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      display: none;
+    }
+    .list-box {
+      margin-top: 24px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(13, 92, 70, 0.06);
+      border: 1px solid rgba(208, 225, 219, 0.5);
+    }
+    .list-box h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f4f2;
+      font-size: 14px;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .badge-out { background: #fee2e2; color: #991b1b; }
+    .badge-in { background: #dcfce7; color: #166534; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="header-box">
+      <h1>สมุดเงินของฉัน</h1>
+      <p class="subtitle">บันทึกง่าย รักษาวินัยทางการเงิน</p>
+    </div>
+
+    <section class="card" aria-label="จดรายการ">
+      <label for="type">ประเภทรายการ</label>
+      <select id="type">
+        <option value="รายจ่าย">รายจ่าย</option>
+        <option value="รายรับ">รายรับ</option>
+      </select>
+
+      <label for="amount">จำนวนเงิน (บาท)</label>
+      <input id="amount" type="number" step="any" placeholder="0.00">
+
+      <label for="account">บัญชี / ภาระหนี้สิน</label>
+      <select id="account">
+        <option>เงินเดือน</option>
+        <option selected>ใช้จ่ายส่วนตัว</option>
+        <option>เงินเก็บ</option>
+        <option>เงินสำรอง</option>
+        <option>เงินสำรองฉุกเฉิน</option>
+        <option>เงินเหลือรายเดือน</option>
+        <option>หนี้สิน / ผ่อนชำระ (เช่น ผ่อนบ้าน/รถ/บัตร)</option>
+      </select>
+
+      <label for="method">วิธีรับหรือจ่ายเงิน</label>
+      <select id="method">
+        <option>เงินสด</option>
+        <option>เงินโอน / พร้อมเพย์</option>
+      </select>
+
+      <label for="detail">ซื้ออะไร / รายละเอียด</label>
+      <input id="detail" type="text" placeholder="เช่น ค่าอาหาร, ค่างวดรถ">
+
+      <button type="button" id="saveBtn">บันทึกรายการ</button>
+      <div id="msg" class="success-msg">บันทึกรายการสำเร็จ!</div>
+    </section>
+
+    <div class="list-box">
+      <h3>รายการล่าสุดในเครื่อง</h3>
+      <div id="transactionList" style="color: var(--text-sub); font-size: 14px;">ยังไม่มีรายการ</div>
+    </div>
+  </main>
+
+  <script>
+    let transactions = JSON.parse(localStorage.getItem('my_money_tx') || '[]');
+
+    function renderList() {
+      const listDiv = document.getElementById('transactionList');
+      if (transactions.length === 0) {
+        listDiv.innerHTML = 'ยังไม่มีรายการ';
+        return;
+      }
+      listDiv.innerHTML = transactions.slice(-5).reverse().map(tx => {
+        const badgeClass = tx.type === 'รายรับ' ? 'badge-in' : 'badge-out';
+        return `
+          <div class="item">
+            <div><span class="badge ${badgeClass}">${tx.type}</span> <b>${Number(tx.amount).toLocaleString()} บาท</b></div>
+            <div style="margin-top: 4px; color: var(--text);"><b>บัญชี:</b> ${tx.account} (${tx.method})</div>
+            <div style="color: var(--text-sub); font-size: 13px;">${tx.detail || 'ไม่มีรายละเอียด'} • <span style="font-size:11px;">${tx.time}</span></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderList();
+
+    document.getElementById('saveBtn').addEventListener('click', function() {
+      const type = document.getElementById('type').value;
+      const amount = document.getElementById('amount').value;
+      const account = document.getElementById('account').value;
+      const method = document.getElementById('method').value;
+      const detail = document.getElementById('detail').value;
+
+      if (!amount || Number(amount) <= 0) {
+        alert('กรุณากรอกจำนวนเงินให้ถูกต้องครับ');
+        return;
+      }
+
+      const newTx = { type, amount, account, method, detail, time: new Date().toLocaleDateString('th-TH', {day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit'}) };
+      transactions.push(newTx);
+      
+      localStorage.setItem('my_money_tx', JSON.stringify(transactions));
+
+      document.getElementById('amount').value = '';
+      document.getElementById('detail').value = '';
+
+      const msg = document.getElementById('msg');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2000);
+
+      renderList();
+    });
+  </script>
+</body>
+</html>
